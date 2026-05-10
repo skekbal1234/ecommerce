@@ -45,13 +45,13 @@ Images are loaded from placeholder URLs in the sample data. Replace them with yo
 
 ## Deploying with Your Own Domain
 
-The project now supports an HTTP front-facing server via Nginx on EC2. This means you can point your domain name at your EC2 instance and serve the app over port 80.
+The project supports an HTTP front-facing server via Nginx on EC2. Point your domain name at your EC2 instance and the app will be served on port 80.
 
 ### Steps to use your domain
 
 1. Set your domain's DNS A record to your EC2 public IP.
 2. Ensure the EC2 security group allows inbound traffic on port `80`.
-3. Run deployment on EC2:
+3. Use the remote deploy script:
 
 ```bash
 cd /path/to/your/app
@@ -59,15 +59,22 @@ chmod +x deploy_ec2.sh
 ./deploy_ec2.sh
 ```
 
-The script will:
+Or from your local machine, copy the repo and deploy in one step:
+
+```bash
+chmod +x deploy_local_to_ec2.sh
+./deploy_local_to_ec2.sh ubuntu@1.2.3.4 /home/ubuntu/leather-ecommerce www.goldhands.com
+```
+
+The deploy process will:
 - install Nginx if needed
-- create an Nginx reverse proxy config for your domain
+- create an Nginx reverse proxy config for `www.goldhands.com`
 - restart Nginx
 - run the Docker container on port `5000`
 - serve the app on port `80`
 
-### GitHub Actions
+### Notes
 
-The GitHub workflow will copy the repository to EC2 and then run `deploy_ec2.sh` remotely. To use your domain, you can set the `DOMAIN` environment variable on the EC2 host or in the SSH command.
-
-If you want, I can also update the workflow to pass the domain as a secret and deploy it automatically with the correct domain name.
+- Replace `ubuntu@1.2.3.4` with your EC2 username and host.
+- Replace `/home/ubuntu/leather-ecommerce` with your desired remote app directory.
+- If you run into SSH issues, make sure your local machine has SSH access to the EC2 instance.
