@@ -42,22 +42,6 @@ The app will run on `http://localhost:5000` and serve the HTML interface.
 
 Images are loaded from placeholder URLs in the sample data. Replace them with your own product visuals to match your leather brand.
 
-## CI/CD Deployment
-
-This repo includes GitHub Actions for CI/CD in `.github/workflows/deploy.yml`.
-
-Secrets required for deploy:
-- `EC2_HOST` – EC2 public IP or hostname
-- `EC2_USER` – SSH username (`ec2-user`, `ubuntu`, etc.)
-- `EC2_SSH_KEY` – private SSH key for the EC2 host
-- `EC2_SSH_PORT` – SSH port (usually `22`)
-- `EC2_APP_PATH` – deployment directory on EC2 (for example `/home/ubuntu/leather-ecommerce`)
-
-The workflow will:
-1. Run Python dependency install and syntax check
-2. Build the Docker image
-3. Copy repository files to EC2
-4. Build and restart the Docker container on EC2
 
 ## Deploying with Your Own Domain
 
